@@ -1,0 +1,29 @@
+.mSpan {
+    color: #08b73a;
+  }
+  
+.logo {
+font-size: 3rem;
+display: flex;
+background-color: black;
+margin-top: 0;
+height: 4rem;
+justify-content: center;
+align-items: center;
+}
+
+#playlistSelect {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    height: 2rem;
+    width: 12rem;
+}
+
+select {
+    color: black;
+}
+
+option {
+    color: black;
+}

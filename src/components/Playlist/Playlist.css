@@ -1,0 +1,62 @@
+.playlist_container {
+    border-radius: 5px;
+    width: 40%;
+    background-image: linear-gradient(to bottom right, black, #043913) ;
+}
+
+.playlist_titleContainer {
+    display: flex;
+    gap: 1rem;
+}
+
+.playlist_title {
+    padding-left: 1.5rem;
+    font-size: 2rem;
+    font-weight: bold;
+    background: none;
+    border: none;
+    color: white;
+}
+
+#playlist_titleInput {
+    width: 50%;
+    padding-top: 1.7rem;
+    height: 1.7rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: none;
+    border: none;
+    color: white;
+    border-bottom: solid 1px white;
+}
+
+.playlist_titleInput:focus {
+    outline: none;
+}
+
+.playlist_titleInput:hover {
+    cursor: pointer;
+}
+
+.playlist_titleInput::placeholder {
+    font-size: 1rem;
+}
+
+button {
+    background-color: #0a7c2a;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+button:active {
+    background-color: #054818;
+}
+
+.hidden {
+    display: none;
+}
