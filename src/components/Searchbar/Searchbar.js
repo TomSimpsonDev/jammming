@@ -1,17 +1,22 @@
-import React from 'react';
-import styles from './Searchbar.module.css';
+import React, { useState } from 'react';
+import './Searchbar.css';
 
 export default function Searchbar(props) {
-  const { track, onTrackChange } = props;
+  const [searchTermInput, setSearchTermInput] = useState('');
+  const { track, onSearch } = props;
   return (
-    <div className={styles.trackSearch_container}>
+    <div className="trackSearch_container">
       <input
-        className={styles.trackSearch}
+        className="trackSearch"
         name="track"
         value={track}
         placeholder="Track Name..."
-        onChange={(e) => onTrackChange(e.target.value)}
+        onChange={(e) => setSearchTermInput(e.target.value)}
       ></input>
+      <button 
+        className="searchBtn"
+        onClick={() => onSearch(searchTermInput)}
+      >Search</button>
     </div>
   )
 }

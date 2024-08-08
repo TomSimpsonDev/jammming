@@ -1,0 +1,30 @@
+.sbar_title {
+    color: green;
+}
+
+.trackSearch_container {
+    margin: 5rem auto;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.trackSearch {
+    color: black;
+    font-size: 1.2rem;
+    font-weight: bold; 
+    border: none;
+    border-radius: 5px;
+    height: 3rem;
+    min-width: 300px;
+    text-align: center;
+}
+
+.trackSearch:focus::placeholder {
+    color: transparent;
+}
+
+.searchBtn {
+    font-size: 1.2rem;
+    height: 3.2rem;
+}

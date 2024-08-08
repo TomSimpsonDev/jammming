@@ -1,51 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Playlist from './components/Playlist/Playlist';
 import SearchResults from './components/SearchResults/SearchResults';
 import Searchbar from './components/Searchbar/Searchbar';
 import Navbar from './components/Navbar/Navbar';
+import Spotify from './util/Spotify';
 
 function App() {
-  const [searchResults, setSearchResults] = useState([
-    {
-      name: 'Halo',
-      artist: 'Porcupine Tree',
-      album: 'Deadwing',
-      id: 1,
-      uri: 'spotify:track:0sh26WhJ5AUbIonujNQ4Yh'
-    },
-    {
-      name: 'Metropolis Pt. 1',
-      artist: 'Dream Theater',
-      album: 'Images and Words',
-      id: 2,
-      uri: 'spotify:track:6nRCTb5b0N5zp8WTeY6xFZ'
-    },
-    {
-      name: 'Golem',
-      artist: 'Caligula\'s Horse',
-      album: 'Charcoal Grace',
-      id: 3,
-      uri: 'spotify:track:0uAWaWSWkFrbayh1xsOzXB'
-    },
-    {
-      name: 'Bridge Burning',
-      artist: 'Foo Fighters',
-      album: 'Wasting Light',
-      id: 4,
-      uri: 'spotify:track:0bHD1nLe7Nhw55ZGJ92332'
-    }
-  ]);
+  const [searchResults, setSearchResults] = useState([]);
 
+  const [searchValue, setSearchValue] = useState('');
   const [selectedTracks, setSelectedTracks] = useState([]);
   const [playlist, setPlaylist] = useState({});
   const [playlistName, setPlaylistName] = useState('');
   const [uriList, setUriList] = useState(['spotify:track:0sh26WhJ5AUbIonujNQ4Yh', ]);
+  const [isTokenReady, setIsTokenReady] = useState(false);
+
+  useEffect(() => {
+    const token = Spotify.getAccessToken();
+    console.log('token: ' + token);
+    if (token) {
+      setIsTokenReady(true);
+    }
+  }, []);
+
+  const search = async (searchTerm) => {
+    if (!isTokenReady) {
+      console.log('Token not ready, cannot search.');
+      return
+    }
+    if (searchTerm !== '') {
+      console.log(`Searching for ${searchTerm}`);
+      const tracks = await Spotify.search(searchTerm);
+      console.log(`Search results: ${tracks.length} tracks found`);
+      setSearchResults(tracks);
+    } else {
+      setSearchResults([]);
+    }
+  };
 
   const addTrack = (track) => {
     if (!selectedTracks.some((selectedTrack) => selectedTrack.id === track.id)) {
       setSelectedTracks([...selectedTracks, track]);
       setUriList([...uriList, track.uri]);
+      console.log(uriList);
     }
   }
 
@@ -66,26 +64,31 @@ function App() {
     setPlaylistName(newName);
   }
 
-  const savePlaylist = (playlistName) => {
-    setPlaylist({name: playlistName, tracks: uriList})
-    clearPlaylist();
-    console.log(`${playlist.name}: ${playlist.tracks}`)
-  }
-  
-  const updateSearchResults = (newSearchResults) => {
-    setSearchResults(newSearchResults);
+  const savePlaylist = async () => {
+    const userId = await Spotify.getUserId();
+    const playlistId = await Spotify.createPlaylist(userId, playlistName);
+    const trackUris = uriList;
+
+    await Spotify.addTracksToPlaylist(userId, playlistId, trackUris);
+
+    setPlaylistName('');
+    setSelectedTracks([]);
+    const playlistInput = document.getElementById('playlist_titleInput');
+    playlistInput.value = '';
   }
 
   return (
     <div className="App">
       <Navbar 
         playlists={playlist}
-        // selectedPlaylist={selectedPlaylist}
-        // updateSelectedPlaylist={updateSelectedPlaylist}
       />
-      <Searchbar updateSearchResults={updateSearchResults}/>
+      <Searchbar onSearch={search}/>
       <div className="functionality_container">
-        <SearchResults searchResults={searchResults} addTrack={addTrack} />
+        <SearchResults 
+          searchResults={searchResults} 
+          addTrack={addTrack} 
+          searchValue={searchValue}
+        />
         <Playlist 
           selectedTracks={selectedTracks} 
           clearPlaylist={clearPlaylist}
@@ -93,9 +96,6 @@ function App() {
           playlistName={playlistName}
           updatePlaylistName={updatePlaylistName}
           savePlaylist={savePlaylist}
-          // selectedPlaylist={selectedPlaylist}
-          // deletePlaylist={deletePlaylist}
-          // updateSelectedPlaylist={updateSelectedPlaylist}
         />
       </div>
     </div>

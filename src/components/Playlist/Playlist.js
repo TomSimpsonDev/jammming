@@ -38,11 +38,6 @@ export default function Playlist(props) {
         onClick={clearPlaylist}
       >Clear</button>
 
-      {/* <button 
-        className={`${"deleteBtn"} ${selectedPlaylist === '' ? "hidden" : ""}`}
-        onClick={playlist => deletePlaylist(playlist)}
-      >X</button> */}
-
       {selectedTracks.map((track) => 
         <Track track={track} addOrRemoveTrack={removeTrack} type={'playlist'} key={track.id} />
       )}

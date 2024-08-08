@@ -1,6 +1,9 @@
 .playlist_container {
     border-radius: 5px;
     width: 40%;
+    height: min-content;
+    min-height: 500px;
+    padding-bottom: 1rem;
     background-image: linear-gradient(to bottom right, black, #043913) ;
 }
 
@@ -40,13 +43,6 @@
 
 .playlist_titleInput::placeholder {
     font-size: 1rem;
-}
-
-button {
-    background-color: #0a7c2a;
-    border: none;
-    border-radius: 5px;
-    padding: 0.5rem 1rem;
 }
 
 button:hover {
