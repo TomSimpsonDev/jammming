@@ -72,6 +72,9 @@ function App() {
     console.log(`${playlist.name}: ${playlist.tracks}`)
   }
   
+  const updateSearchResults = (newSearchResults) => {
+    setSearchResults(newSearchResults);
+  }
 
   return (
     <div className="App">
@@ -80,11 +83,10 @@ function App() {
         // selectedPlaylist={selectedPlaylist}
         // updateSelectedPlaylist={updateSelectedPlaylist}
       />
-      <Searchbar />
+      <Searchbar updateSearchResults={updateSearchResults}/>
       <div className="functionality_container">
         <SearchResults searchResults={searchResults} addTrack={addTrack} />
         <Playlist 
-          playlists={playlist}
           selectedTracks={selectedTracks} 
           clearPlaylist={clearPlaylist}
           removeTrack={removeTrack} 

@@ -1,10 +1,9 @@
 import React from 'react';
-import styles from './Playlist.css';
+import './Playlist.css';
 import Track from '../Track/Track';
 
 export default function Playlist(props) {
   const { 
-    playlist,
     selectedTracks, 
     clearPlaylist,
     removeTrack, 

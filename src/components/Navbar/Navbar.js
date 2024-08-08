@@ -2,11 +2,11 @@ import React from 'react';
 import './Navbar.css';
 
 export default function Navbar(props) {
-  const { 
-    playlist,
-    selectedPlaylist, 
-    // updateSelectedPlaylist 
-    } = props;
+//   const { 
+//     playlist,
+//     selectedPlaylist, 
+//     updateSelectedPlaylist 
+//     } = props;
 
   return (
     <div>
